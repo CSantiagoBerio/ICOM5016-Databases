@@ -1,0 +1,44 @@
+CREATE TABLE User(
+    user_id bigserial PRIMARY KEY, 
+    first_name varchar(10) NOT NULL,
+    last_name varchar(10) NOT NULL,
+    phone varchar(10) NOT NULL,
+    email varchar(10) NOT NULL,
+    username varchar(10) NOT NULL,
+    password varchar(10) NOT NULL,
+    age tinyint NOT NULL,
+    UNIQUE (email)
+);
+
+CREATE TABLE GroupChats(
+    groupid bigserial PRIMARY KEY,
+    groupname varchar(10) NOT NULL,
+    adminid varchar(10) FOREIGN KEY REFERENCES User(uid),
+    date_created date NOT NULL
+);
+
+CREATE TABLE Messages(
+    messageid bigserial PRIMARY KEY,
+    sent_to varchar(10) FOREIGN KEY REFERENCES Group(gid),
+    sent_by varchar(10) FOREIGN KEY REFERENCES User(uid),
+    date date NOT NULL,
+    content varchar(10) NOT NULL,
+    hashtag varchar(10),
+    likes int,
+    dislikes int
+);
+
+CREATE TABLE ContactList(
+    cLid bigserial PRIMARY KEY,
+    usrid varchar(10) FOREIGN KEY REFERENCES User(user_id),
+    contactid varchar(10) FOREIGN KEY REFERENCES User(user_id),
+    contact_phone varchar(10) FOREIGN KEY REFERENCES User(phone),
+    contact_email varchar(10) FOREIGN KEY REFERENCES User(email)
+);
+
+CREATE TABLE Members(
+    table_id bigserial PRIMARY KEY,
+    usr_id varchar(10) FOREIGN KEY REFERENCES User(user_id),
+    group_id varchar(10) FOREIGN KEY REFERENCES Group(group_id),
+);
+    
